@@ -3,46 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Undangan Yusuf & Uchy</title>
+  <title>Yusuf & Uchy - Midnight Rose Invitation</title>
+
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap');
+
+    :root {
+      --gold: #d4af37;
+      --rose: #b3003c;
+      --bg: #0b0b0f;
+    }
+
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
-      background: #111;
+      background: var(--bg);
       color: #fff;
+      overflow: hidden;
     }
+
+    /* Overlay login */
     #overlay {
       position: fixed;
       inset: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(8px);
+      background: radial-gradient(circle at top, #1a1a1a 0%, #000 100%);
       z-index: 9999;
-      flex-direction: column;
-      transition: opacity 0.5s ease;
+      text-align: center;
+      transition: opacity 0.6s ease;
     }
-    #overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    #overlay.hidden { opacity: 0; pointer-events: none; }
+
     #overlay h2 {
-      margin-bottom: 20px;
-      color: #f1c40f;
-      letter-spacing: 1px;
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
     }
     #overlay input {
       padding: 10px;
       border-radius: 8px;
-      border: none;
+      border: 1px solid var(--gold);
+      background: #111;
+      color: var(--gold);
       width: 220px;
       text-align: center;
       outline: none;
     }
     #overlay button {
       margin-top: 15px;
-      background: #f1c40f;
+      background: var(--gold);
       color: #111;
       border: none;
       padding: 10px 20px;
@@ -51,21 +64,119 @@
       font-weight: 600;
       transition: 0.3s;
     }
-    #overlay button:hover {
-      background: #ffe45e;
-    }
-    #overlay p {
-      margin-top: 10px;
-      color: #ff5555;
-      font-size: 14px;
-    }
+    #overlay button:hover { background: #ffe58a; }
+    #overlay p { color: #ff5555; font-size: 0.9rem; }
+
+    /* Content */
     #content {
       display: none;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    section.hero {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1c1c1f, #000);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    section.hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1617038402401-39a06e4b4f07?auto=format&fit=crop&w=1600&q=60');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.25;
+      z-index: 0;
+      animation: zoomBg 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoomBg {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    .hero-content {
+      z-index: 1;
+      color: var(--gold);
+      text-shadow: 0 0 10px #000;
+      animation: fadeInUp 2s ease;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    .hero-content p.date {
+      margin: 0.5rem 0;
+      color: var(--rose);
+      font-weight: 500;
+      letter-spacing: 3px;
+    }
+
+    .hero-content p.desc {
+      color: #eee;
+      max-width: 500px;
+      margin: 1rem auto;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    a.gift-btn {
+      background: var(--gold);
+      color: #111;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+    a.gift-btn:hover {
+      background: var(--rose);
+      color: #fff;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Floating rose petals (optional aesthetic animation) */
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle at center, var(--rose), transparent);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: floatPetal 10s linear infinite;
+    }
+
+    @keyframes floatPetal {
+      from { transform: translateY(-10px) translateX(0); opacity: 0.4; }
+      50% { opacity: 0.7; }
+      to { transform: translateY(110vh) translateX(40px); opacity: 0; }
     }
   </style>
 </head>
-<body>
 
+<body>
+  <!-- Overlay Password -->
   <div id="overlay">
     <h2>Masukkan Kode Undangan 💌</h2>
     <input type="password" id="password" placeholder="Kode Rahasia" />
@@ -73,16 +184,31 @@
     <p id="error"></p>
   </div>
 
+  <!-- Konten Undangan -->
   <div id="content">
-    <section style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#111;color:#f1c40f;text-align:center;">
-      <h1 style="font-size:2.5rem;margin:0;">Yusuf & Uchy</h1>
-      <p style="margin:10px 0;">07 • 07 • 2025</p>
-      <p>Dengan penuh kebahagiaan kami mengundang Anda untuk hadir dalam acara pernikahan kami.</p>
-      <br/>
-      <a href="https://linktransfermu.com" target="_blank" style="background:#f1c40f;color:#111;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;">Kirim Hadiah Digital 💝</a>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Yusuf & Uchy</h1>
+        <p class="date">07 • 07 • 2025</p>
+        <p class="desc">Dengan penuh cinta dan syukur, kami mengundang Anda untuk menjadi bagian dari hari bahagia kami.</p>
+        <a href="https://linktransfermu.com" target="_blank" class="gift-btn">Kirim Hadiah Digital 💝</a>
+      </div>
     </section>
   </div>
 
+  <!-- Petal Animation Elements -->
+  <script>
+    for(let i=0; i<15; i++){
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random()*100 + 'vw';
+      petal.style.animationDuration = (8 + Math.random()*6) + 's';
+      petal.style.animationDelay = (Math.random()*5) + 's';
+      document.body.appendChild(petal);
+    }
+  </script>
+
+  <!-- Script untuk cek password via API -->
   <script>
     const overlay = document.getElementById("overlay");
     const content = document.getElementById("content");
@@ -100,15 +226,14 @@
             overlay.style.display = "none";
             content.style.display = "block";
             document.body.style.overflow = "auto";
-          }, 500);
+          }, 600);
         } else {
-          error.innerText = "Kode undangan salah, coba lagi.";
+          error.innerText = "Kode salah, coba lagi 🌹";
         }
       } catch (e) {
         error.innerText = "Terjadi kesalahan koneksi.";
       }
     }
   </script>
-
 </body>
 </html>
