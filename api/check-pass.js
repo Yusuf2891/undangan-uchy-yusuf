@@ -1,8 +1,5 @@
 export default function handler(req, res) {
   const { pass } = req.query;
-
-  // password diambil dari environment variable di vercel
-  const valid = pass === process.env.INVITE_PASS;
-
-  res.status(200).json({ valid });
+  const PASSWORD = process.env.INVITE_PASS || "undanganku2025"; // default fallback
+  res.status(200).json({ valid: pass === PASSWORD });
 }
