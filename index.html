@@ -6,6 +6,8 @@
   <title>Yusuf & Uchy Wedding Invitation</title>
   <!-- Load Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CD8B/N6w7xO8F/0rZ04k7W70D/uP6uTf5sF8H/Bw4g6v5i6h0E+e8g6N0E+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Load Playfair Display & Poppins Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   
@@ -19,6 +21,7 @@
             green: '#486b54',
             gold: '#bfa06f',
             graytext: '#888',
+            navbg: 'rgba(255, 255, 255, 0.95)', // Background navbar semi-transparan
           },
           fontFamily: {
             // Font untuk nama utama, judul
@@ -39,6 +42,8 @@
       background: theme('colors.cream');
       overflow-x: hidden;
       scroll-behavior: smooth;
+      /* Tambahkan padding bawah agar konten tidak tertutup navbar */
+      padding-bottom: 70px;
     }
     
     /* Memastikan body tidak bisa di-scroll sebelum dibuka */
@@ -124,7 +129,7 @@
         <!-- Tombol untuk membuka (akan disembunyikan setelah dibuka) -->
         <button id="openButton"
                 class="bg-gold text-white font-semibold py-3 px-10 rounded-full hover:bg-green shadow-xl transition duration-300 active:scale-[0.98] mt-4"
-                onclick="document.getElementById('contentDetail').scrollIntoView({ behavior: 'smooth' });">
+                onclick="scrollToSection('contentDetail')">
           Open Invitation
         </button>
       </div>
@@ -144,7 +149,7 @@
             <p class="text-sm text-graytext">08.00 WIB - 10.00 WIB</p>
         </div>
 
-        <div class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-gold">
+        <div id="location" class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-gold">
             <h3 class="text-xl font-display font-bold text-green mb-2">Calamus Ballroom</h3>
             <p class="text-md font-medium text-graytext">Jl. Mawar No.7, Cihampelas, Bandung</p>
             <a href="https://maps.google.com/?q=Calamus+Ballroom" target="_blank"
@@ -154,7 +159,7 @@
         </div>
         
         <!-- Tombol Link Hadiah -->
-        <a href="https://linktransfermu.com" target="_blank"
+        <a id="gift" href="https://linktransfermu.com" target="_blank"
            class="btn inline-block mt-10 bg-green text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gold transition duration-300 active:scale-[0.98]">
           Kirim Hadiah Digital 💝
         </a>
@@ -165,6 +170,36 @@
       </div>
     </section>
   </div>
+  
+  <!-- Fixed Bottom Navigation Bar -->
+  <nav id="bottomNav" class="fixed bottom-0 left-0 right-0 z-40 bg-navbg shadow-2xl backdrop-blur-sm border-t border-green/10">
+    <div class="max-w-xl mx-auto flex justify-around items-center h-16">
+      
+      <!-- Icon 1: Home/Cover -->
+      <a href="#cover" onclick="scrollToSection('cover')" class="flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
+        <i class="fas fa-home text-xl mb-1"></i>
+        <span>Home</span>
+      </a>
+
+      <!-- Icon 2: Detail/Acara -->
+      <a href="#contentDetail" onclick="scrollToSection('contentDetail')" class="flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
+        <i class="fas fa-calendar-alt text-xl mb-1"></i>
+        <span>Acara</span>
+      </a>
+
+      <!-- Icon 3: Lokasi/Peta -->
+      <a href="#location" onclick="scrollToSection('location')" class="flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
+        <i class="fas fa-map-marked-alt text-xl mb-1"></i>
+        <span>Lokasi</span>
+      </a>
+
+      <!-- Icon 4: Hadiah -->
+      <a href="#gift" onclick="scrollToSection('gift')" class="flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
+        <i class="fas fa-gift text-xl mb-1"></i>
+        <span>Hadiah</span>
+      </a>
+    </div>
+  </nav>
 
   <!-- Script cek password dan interaksi -->
   <script>
@@ -175,6 +210,11 @@
     
     // Hapus CORRECT_PASS karena kita akan menggunakan API
     // const CORRECT_PASS = "yusufuchy"; 
+
+    // Fungsi untuk scroll ke section dengan smooth
+    function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
 
     // Ambil nama tamu dari URL jika ada
     document.addEventListener('DOMContentLoaded', () => {
@@ -220,8 +260,8 @@
             content.classList.add("visible");
             body.classList.remove("no-scroll");
             
-            // Gulir ke detail undangan setelah overlay hilang
-            document.getElementById('cover').scrollIntoView({ behavior: 'smooth' });
+            // Panggil scrollToSection setelah konten terlihat
+            scrollToSection('cover');
           }, 600); 
           
         } else {
@@ -237,6 +277,19 @@
         button.innerText = 'Buka Undangan';
       }
     }
+    
+    // Pastikan navigasi berfungsi setelah dibuka, tambahkan id pada section dan link.
+    // Tambahkan event listener untuk smooth scrolling pada anchor links jika diperlukan
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            if (targetId) {
+                scrollToSection(targetId);
+            }
+        });
+    });
+
   </script>
 </body>
 </html>
