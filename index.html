@@ -55,13 +55,15 @@
 
     /* Style untuk border floral di cover page */
     .floral-bg {
-      background-image: url('https://png.pngtree.com/png-vector/20230906/ourmid/pngtree-eucalyptus-green-leaves-floral-corner-frame-png-image_10165193.png');
+      /* Mengganti gambar latar belakang dengan URL gambar floral yang berbeda */
+      background-image: url('https://placehold.co/600x400/f9f6f1/486b54?text=Floral+Background+Placeholder');
       background-repeat: no-repeat;
-      background-size: 250px;
-      opacity: 0.3;
-      pointer-events: none; /* agar tidak mengganggu interaksi */
+      background-size: 100% 100%; /* Menggunakan full cover untuk sementara */
+      background-position: center;
+      opacity: 0.1; /* Mengurangi opacity agar elegan */
+      pointer-events: none;
     }
-
+    
     /* Posisi Awal Fade-In */
     #content {
       opacity: 0;
@@ -112,13 +114,19 @@
   <div id="content" class="min-h-screen">
     <!-- Section 1: Cover Page (Meniru Layar Kiri di Referensi) -->
     <section id="cover" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <!-- Dekorasi Floral -->
-      <div class="floral-bg absolute inset-0">
-        <!-- Posisi Top Left -->
-        <div class="absolute top-0 left-0 w-[250px] h-[250px] transform -translate-x-12 -translate-y-12 rotate-0"></div>
-        <!-- Posisi Bottom Right -->
-        <div class="absolute bottom-0 right-0 w-[250px] h-[250px] transform translate-x-12 translate-y-12 rotate-180"></div>
-      </div>
+      <!-- Dekorasi Floral Background (Placeholder baru) -->
+      <div class="floral-bg absolute inset-0"></div>
+      
+      <!-- Dekorasi SVG Daun Emas (Untuk kesan elegan) -->
+      <svg class="absolute top-0 left-0 w-1/2 h-1/2 transform -translate-x-1/4 -translate-y-1/4 opacity-80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 10 10 C 20 5 40 10 50 30 C 60 50 50 60 30 50 C 10 40 5 20 10 10 Z" fill="#bfa06f" opacity="0.5"/>
+        <path d="M 50 30 Q 55 20 60 30 T 70 40 C 65 50 45 45 50 30 Z" fill="#486b54" opacity="0.6"/>
+      </svg>
+      <svg class="absolute bottom-0 right-0 w-1/2 h-1/2 transform translate-x-1/4 translate-y-1/4 opacity-80 rotate-180" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 10 10 C 20 5 40 10 50 30 C 60 50 50 60 30 50 C 10 40 5 20 10 10 Z" fill="#bfa06f" opacity="0.5"/>
+        <path d="M 50 30 Q 55 20 60 30 T 70 40 C 65 50 45 45 50 30 Z" fill="#486b54" opacity="0.6"/>
+      </svg>
+
 
       <div class="relative z-10 w-full max-w-md mx-auto p-8 text-center bg-white/50 backdrop-blur-[2px] rounded-lg">
         <p class="text-sm font-light text-green/80 tracking-widest sr-delay-100 sr-top" data-sr-trigger>The Wedding Of</p>
