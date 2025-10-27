@@ -37,6 +37,20 @@
   </script>
 
   <style>
+    .bunga {
+  animation: goyangBunga 6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* animasi goyang pelan berulang */
+@keyframes goyangBunga {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  25%  { transform: translateY(-5px) rotate(1deg) scale(1.02); }
+  50%  { transform: translateY(0) rotate(0deg) scale(1); }
+  75%  { transform: translateY(5px) rotate(-1deg) scale(0.98); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
     /* Styling umum */
     body {
       font-family: "Poppins", sans-serif;
@@ -434,6 +448,7 @@
   </script>
 </body>
 </html>
+
 
 
 
