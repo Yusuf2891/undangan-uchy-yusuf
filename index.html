@@ -3,400 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yusuf & Uchy Wedding Invitation</title>
-  <!-- Load Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
-  <!-- Load Font Awesome Icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CD8B/N6w7xO8F/0rZ04k7W70D/uP6uTf5sF8H/Bw4g6v5i6h0E+e8g6N0E+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Load ScrollReveal library for scroll animations --><script src="https://unpkg.com/scrollreveal"></script>
-  <!-- Load Playfair Display & Poppins Fonts --><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <script>
-    // Konfigurasi Tailwind untuk warna dan font kustom
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cream: '#f9f6f1',
-            green: '#486b54',
-            gold: '#bfa06f',
-            graytext: '#888',
-            navbg: 'rgba(255, 255, 255, 0.95)', // Background navbar semi-transparan
-          },
-          fontFamily: {
-            // Font untuk nama utama, judul
-            display: ['"Playfair Display"', 'serif'],
-            // Font utama untuk teks
-            sans: ['Poppins', 'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
-
+  <title>Undangan Yusuf & Uchy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Styling umum */
     body {
+      margin: 0;
       font-family: "Poppins", sans-serif;
-      color: theme('colors.green');
-      background: theme('colors.cream');
+      background: #1a0f1e;
+      color: #f9f6f1;
       overflow-x: hidden;
-      scroll-behavior: smooth;
-      /* Tambahkan padding bawah agar konten tidak tertutup navbar */
-      padding-bottom: 70px;
-    }
-    
-    /* Memastikan body tidak bisa di-scroll sebelum dibuka */
-    body.no-scroll {
-      overflow-y: hidden;
     }
 
-    /* Posisi Awal Fade-In */
-    #content {
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
-    #content.visible {
-      opacity: 1;
-    }
-
-    /* Smooth transition for overlay */
+    /* Overlay Password */
     #overlay {
-      transition: opacity 0.6s ease;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      transition: opacity 0.5s ease;
     }
-    
-    /* Custom style untuk galeri placeholder */
-    .gallery-placeholder {
-        aspect-ratio: 16/9;
-        background-color: theme('colors.green') / 10;
-        border: 2px dashed theme('colors.green') / 20;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
+    #overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #overlay h2 {
+      color: #e4bcbc;
+      margin-bottom: 20px;
+      font-family: "Playfair Display", serif;
+    }
+    #overlay input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 220px;
+      text-align: center;
+      outline: none;
+      font-size: 1rem;
+    }
+    #overlay button {
+      margin-top: 15px;
+      background: #e4bcbc;
+      color: #2a0d2c;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    #overlay button:hover {
+      background: #f3d6d6;
+    }
+    #overlay p {
+      margin-top: 10px;
+      color: #ff5555;
+      font-size: 14px;
     }
 
-    /* Keyframes untuk Animasi Bunga */
-    @keyframes flowerLoop {
-        0% { transform: scale(1) rotate(0deg); opacity: 1; }
-        50% { transform: scale(1.03) rotate(1deg); opacity: 0.95; }
-        100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-
-    /* Menerapkan Animasi ke Gambar Bunga */
+    /* Bunga animasi */
     .animated-flower {
-        animation: flowerLoop 8s ease-in-out infinite; /* Animasi loop 8 detik */
-        pointer-events: none; /* Pastikan tidak mengganggu klik */
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.9;
+      z-index: 0;
+      animation: flowerLoop 7s ease-in-out infinite;
+      transform-origin: center;
+      transition: opacity 1s ease;
+    }
+
+    @keyframes flowerLoop {
+      0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+      50%  { transform: scale(1.04) rotate(1deg); opacity: 0.96; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    /* Konten utama */
+    #content {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 2.8rem;
+      color: #e4bcbc;
+      margin-bottom: 0;
+    }
+    p.date {
+      font-size: 1.2rem;
+      color: #f3d6d6;
+      margin: 5px 0 20px;
+    }
+    a.button {
+      background: #e4bcbc;
+      color: #2a0d2c;
+      padding: 10px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    a.button:hover {
+      background: #f3d6d6;
     }
   </style>
 </head>
+<body>
 
-<body class="no-scroll">
-  <!-- Overlay Password - Sama seperti referensi (layar kiri) sebelum dibuka --><div id="overlay" class="fixed inset-0 flex flex-col items-center justify-center text-center bg-cream z-[9999] p-6">
-    <div class="max-w-xs w-full p-8 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-green/10">
-      <h2 class="font-display text-2xl font-semibold text-green mb-4">Wedding Invitation 💌</h2>
-      <p class="text-sm text-graytext mb-4">Mohon masukkan kode undangan untuk melanjutkan.</p>
-      
-      <input type="password" id="password" placeholder="Kode Rahasia" 
-             class="p-3 w-full text-center rounded-lg border border-green/50 outline-none text-green focus:border-gold transition duration-300 bg-white" 
-             autocomplete="off"/>
-      
-      <button onclick="checkPass()"
-              class="mt-4 w-full bg-gold text-white font-semibold py-3 rounded-lg hover:bg-green shadow-md transition duration-300 active:scale-[0.98]">
-        Buka Undangan
-      </button>
-      <p id="error" class="text-red-500 text-sm mt-3"></p>
-    </div>
+  <!-- Empat bunga di sudut -->
+  <img src="bunga daun.png" alt="bunga" class="animated-flower" style="top:0;left:0;width:130px;transform:rotate(-12deg) translate(-25%,-25%);" />
+  <img src="bunga daun.png" alt="bunga" class="animated-flower" style="top:0;right:0;width:130px;transform:rotate(12deg) translate(25%,-25%);" />
+  <img src="bunga daun.png" alt="bunga" class="animated-flower" style="bottom:0;left:0;width:130px;transform:rotate(168deg) translate(-25%,25%);" />
+  <img src="bunga daun.png" alt="bunga" class="animated-flower" style="bottom:0;right:0;width:130px;transform:rotate(-168deg) translate(25%,25%);" />
+
+  <!-- Password Overlay -->
+  <div id="overlay">
+    <h2>Masukkan Kode Undangan 💌</h2>
+    <input type="password" id="password" placeholder="Masukkan kode..." />
+    <button onclick="checkPass()">Buka Undangan</button>
+    <p id="error"></p>
   </div>
 
-  <!-- Isi Undangan (Container Utama) --><div id="content" class="min-h-screen">
-    <!-- Section 1: Cover Page (Meniru Layar Kiri di Referensi) --><section id="cover" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <!-- Gambar Bunga di Sudut-sudut dengan Animasi --><!-- Sudut Kiri Atas --><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAMAAAA+iaeaAAAABlBMVEUAAAD///+l2Z/dAAAAJklEQVR4nM3BAQEAAAKEoPLvDAoAAAAAAAAAAAAAAAAAAAAAAABg4A5sAAHkHl/jAAAAAElFTkSuQmCC" 
-           alt="bunga daun.png" 
-           class="animated-flower absolute top-0 left-0 w-40 sm:w-60 h-auto transform -translate-x-1/4 -translate-y-1/4 -rotate-12 z-0 opacity-80" />
-      <!-- Sudut Kanan Atas --><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAMAAAA+iaeaAAAABlBMVEUAAAD///+l2Z/dAAAAJklEQVR4nM3BAQEAAAKEoPLvDAoAAAAAAAAAAAAAAAAAAAAAAABg4A5sAAHkHl/jAAAAAElFTkSuQmCC" 
-           alt="bunga daun.png" 
-           class="animated-flower absolute top-0 right-0 w-40 sm:w-60 h-auto transform translate-x-1/4 -translate-y-1/4 rotate-12 z-0 opacity-80" />
-      <!-- Sudut Kiri Bawah --><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAMAAAA+iaeaAAAABlBMVEUAAAD///+l2Z/dAAAAJklEQVR4nM3BAQEAAAKEoPLvDAoAAAAAAAAAAAAAAAAAAAAAAABg4A5sAAHkHl/jAAAAAElFTkSuQmCC" 
-           alt="bunga daun.png" 
-           class="animated-flower absolute bottom-0 left-0 w-40 sm:w-60 h-auto transform -translate-x-1/4 translate-y-1/4 rotate-160 z-0 opacity-80" />
-      <!-- Sudut Kanan Bawah --><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAMAAAA+iaeaAAAABlBMVEUAAAD///+l2Z/dAAAAJklEQVR4nM3BAQEAAAKEoPLvDAoAAAAAAAAAAAAAAAAAAAAAAABg4A5sAAHkHl/jAAAAAElFTkSuQmCC" 
-           alt="bunga daun.png" 
-           class="animated-flower absolute bottom-0 right-0 w-40 sm:w-60 h-auto transform translate-x-1/4 translate-y-1/4 -rotate-160 z-0 opacity-80" />
-
-      <div class="relative z-10 w-full max-w-md mx-auto p-8 text-center bg-white/50 backdrop-blur-[2px] rounded-lg">
-        <p class="text-sm font-light text-green/80 tracking-widest sr-delay-100 sr-top" data-sr-trigger>The Wedding Of</p>
-        <h1 class="font-display text-5xl sm:text-7xl font-bold text-green my-2 sr-delay-300 sr-top">
-          Yusuf
-          <span class="text-gold text-4xl sm:text-6xl mx-2">&</span>
-          Uchy
-        </h1>
-        <p class="text-gold font-semibold text-lg sm:text-xl mt-4 mb-8 sr-delay-500 sr-top">07 • JULI • 2025</p>
-
-        <!-- Informasi Tamu --><div class="p-4 bg-cream/70 rounded-xl shadow-inner mb-8 border border-green/10 sr-delay-700 sr-left">
-          <p class="text-xs font-medium text-graytext mb-2 tracking-wider">Kepada Yth.</p>
-          <p class="text-lg font-semibold text-green mb-1">Bapak/Ibu/Saudara/i</p>
-          <!-- Placeholder Nama Tamu --><p class="text-2xl font-display font-bold text-green" id="recipientName">
-            Nama Tamu
-          </p>
-        </div>
-        
-        <!-- Tombol untuk membuka (akan disembunyikan setelah dibuka) --><button id="openButton"
-                class="bg-gold text-white font-semibold py-3 px-10 rounded-full hover:bg-green shadow-xl transition duration-300 active:scale-[0.98] mt-4 sr-delay-900 sr-bottom"
-                onclick="scrollToSection('contentDetail')">
-          Open Invitation
-        </button>
-      </div>
+  <!-- Isi Undangan -->
+  <div id="content">
+    <section>
+      <h1>Yusuf & Uchy</h1>
+      <p class="date">07 • 07 • 2025</p>
+      <p>Dengan penuh kebahagiaan kami mengundang Anda untuk hadir dalam acara pernikahan kami.</p>
+      <a href="https://linktransfermu.com" target="_blank" class="button">Kirim Hadiah Digital 💝</a>
     </section>
-
-    <!-- Section 2: Ayat Suci / Doa --><section id="doa" class="min-h-[50vh] bg-cream flex flex-col items-center py-16 px-8">
-        <div class="w-full max-w-md mx-auto text-center">
-            <h2 class="font-display text-3xl font-bold text-green mb-6 sr-delay-100 sr-top">Maha Suci Allah</h2>
-            <p class="text-sm text-graytext italic mb-8 sr-delay-300 sr-left">
-                "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
-            </p>
-            <p class="text-green font-semibold text-sm sr-delay-500 sr-right">(QS. Ar-Ruum: 21)</p>
-        </div>
-    </section>
-
-    <!-- Section 3: Detail Undangan (Acara & Lokasi) --><section id="contentDetail" class="min-h-screen bg-cream flex flex-col items-center p-8 pt-0">
-      <div class="w-full max-w-md mx-auto text-center">
-        <!-- Header detail pernikahan --><p class="text-sm font-medium text-green mb-4 sr-delay-100 sr-top">
-          Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk hadir pada acara resepsi pernikahan putra-putri kami.
-        </p>
-        
-        <div class="my-8 p-6 bg-white rounded-xl shadow-xl border-t-4 border-green sr-delay-300 sr-left">
-            <h2 class="font-display text-3xl font-bold text-green mb-2">Akad Nikah</h2>
-            <p class="text-lg font-semibold text-gold mb-4">Minggu, 07 Juli 2025</p>
-            <p class="text-sm text-graytext">08.00 WIB - 10.00 WIB</p>
-        </div>
-
-        <div class="my-8 p-6 bg-white rounded-xl shadow-xl border-t-4 border-gold sr-delay-500 sr-right">
-            <h2 class="font-display text-3xl font-bold text-green mb-2">Resepsi</h2>
-            <p class="text-lg font-semibold text-gold mb-4">Minggu, 07 Juli 2025</p>
-            <p class="text-sm text-graytext">11.00 WIB - 14.00 WIB</p>
-        </div>
-
-        <div id="location" class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-gold sr-delay-700 sr-bottom">
-            <h3 class="text-xl font-display font-bold text-green mb-2">Calamus Ballroom</h3>
-            <p class="text-md font-medium text-graytext">Jl. Mawar No.7, Cihampelas, Bandung</p>
-            <a href="https://maps.google.com/?q=Calamus+Ballroom" target="_blank"
-               class="inline-block mt-4 text-green font-semibold hover:text-gold transition duration-200 text-sm">
-                <i class="fas fa-map-marker-alt mr-2"></i>Lihat Lokasi di Peta
-            </a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Section 4: Galeri Foto (Placeholder) --><section id="gallery" class="min-h-[50vh] bg-cream flex flex-col items-center py-16 px-8">
-        <div class="w-full max-w-md mx-auto text-center">
-            <h2 class="font-display text-3xl font-bold text-green mb-8 sr-delay-100 sr-top">Momen Terbaik Kami</h2>
-            
-            <div class="grid grid-cols-1 gap-4">
-                <!-- Placeholder Foto 1 --><div class="gallery-placeholder rounded-xl shadow-md sr-delay-300 sr-left">Foto Pre-wedding 1</div>
-                <!-- Placeholder Foto 2 --><div class="gallery-placeholder rounded-xl shadow-md sr-delay-500 sr-right">Foto Pre-wedding 2</div>
-                <!-- Placeholder Foto 3 --><div class="gallery-placeholder rounded-xl shadow-md sr-delay-700 sr-bottom">Foto Couple</div>
-            </div>
-            
-            <p class="text-xs text-graytext mt-6">Akan diperbarui dengan foto asli segera.</p>
-        </div>
-    </section>
-
-    <!-- Section 5: Hadiah & Penutup --><section class="bg-cream flex flex-col items-center p-8 pt-0 pb-20">
-        <div class="w-full max-w-md mx-auto text-center">
-            
-            <!-- Tombol Link Hadiah --><h2 class="font-display text-2xl font-bold text-green mb-4 sr-delay-100 sr-top">Salam Bahagia</h2>
-            <p class="text-sm text-graytext mb-6 sr-delay-300 sr-top">
-                Kehadiran Anda adalah hadiah terbaik, namun jika Anda ingin mengirimkan hadiah digital, silakan gunakan tautan di bawah ini.
-            </p>
-            
-            <a id="gift" href="https://linktransfermu.com" target="_blank"
-               class="btn inline-block mt-4 bg-green text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gold transition duration-300 active:scale-[0.98] sr-delay-500 sr-bottom">
-              <i class="fas fa-hand-holding-heart mr-2"></i>Kirim Hadiah Digital 💝
-            </a>
-
-            <!-- Footer / Closing --><p class="text-sm text-graytext mt-12 mb-4 sr-delay-700 sr-left">Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do'a restu kepada kedua mempelai.</p>
-            <p class="font-display text-xl font-semibold text-green sr-delay-900 sr-right">Wassalamu'alaikum Wr. Wb.</p>
-        </div>
-    </section>
-
   </div>
-  
-  <!-- Fixed Bottom Navigation Bar --><nav id="bottomNav" class="fixed bottom-0 left-0 right-0 z-40 bg-navbg shadow-2xl backdrop-blur-sm border-t border-green/10">
-    <div class="max-w-xl mx-auto flex justify-around items-center h-16">
-      
-      <!-- Icon 1: Home/Cover --><a href="#cover" onclick="scrollToSection('cover')" class="nav-item flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
-        <i class="fas fa-home text-xl mb-1"></i>
-        <span>Home</span>
-      </a>
 
-      <!-- Icon 2: Doa/Ayat --><a href="#doa" onclick="scrollToSection('doa')" class="nav-item flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
-        <i class="fas fa-quran text-xl mb-1"></i>
-        <span>Doa</span>
-      </a>
-
-      <!-- Icon 3: Acara --><a href="#contentDetail" onclick="scrollToSection('contentDetail')" class="nav-item flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
-        <i class="fas fa-calendar-alt text-xl mb-1"></i>
-        <span>Acara</span>
-      </a>
-
-      <!-- Icon 4: Galeri --><a href="#gallery" onclick="scrollToSection('gallery')" class="nav-item flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
-        <i class="fas fa-camera-retro text-xl mb-1"></i>
-        <span>Galeri</span>
-      </a>
-      
-      <!-- Icon 5: Hadiah --><a href="#gift" onclick="scrollToSection('gift')" class="nav-item flex flex-col items-center text-green hover:text-gold transition duration-200 text-sm">
-        <i class="fas fa-gift text-xl mb-1"></i>
-        <span>Hadiah</span>
-      </a>
-    </div>
-  </nav>
-
-  <!-- Script cek password dan interaksi --><script>
-    const overlay = document.getElementById("overlay");
-    const content = document.getElementById("content");
-    const error = document.getElementById("error");
-    const body = document.body;
-    
-    // Inisialisasi ScrollReveal
-    const sr = ScrollReveal({
-        distance: '40px',
-        duration: 1000,
-        easing: 'cubic-bezier(0.5, 0, 0, 1)',
-        origin: 'top',
-        reset: false 
-    });
-    
-    // Aturan Animasi (dipicu saat elemen masuk viewport)
-    const srRules = {
-        'sr-top': { origin: 'top', distance: '40px' },
-        'sr-bottom': { origin: 'bottom', distance: '40px' },
-        'sr-left': { origin: 'left', distance: '40px' },
-        'sr-right': { origin: 'right', distance: '40px' }
-    };
-    
-    // Fungsi untuk menerapkan animasi ScrollReveal ke semua elemen dengan class 'sr-delay-*'
-    function applyScrollReveal() {
-        // Hapus class sr-delay-* dan ganti dengan delay yang sebenarnya
-        document.querySelectorAll('[class*="sr-delay-"]').forEach(el => {
-            const delayMatch = el.className.match(/sr-delay-(\d+)/);
-            const directionMatch = el.className.match(/sr-(top|bottom|left|right)/);
-            
-            if (delayMatch && directionMatch) {
-                const delay = parseInt(delayMatch[1]);
-                const direction = directionMatch[1];
-                
-                const config = { 
-                    delay: delay, 
-                    ...srRules[`sr-${direction}`]
-                };
-                
-                sr.reveal(el, config);
-                
-                // Bersihkan class pemicu agar tidak diproses berulang
-                el.classList.remove(...el.classList.value.split(' ').filter(c => c.startsWith('sr-')));
-            }
-        });
-        
-        // Animasi untuk elemen section utama
-        sr.reveal('#contentDetail, #doa, #gallery', { delay: 0, interval: 100, origin: 'bottom', distance: '20px' });
-    }
-
-    // Fungsi untuk scroll ke section dengan smooth
-    function scrollToSection(sectionId) {
-        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Ambil nama tamu dari URL jika ada
-    document.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      let recipient = urlParams.get('to') || urlParams.get('kepada');
-      
-      if (recipient) {
-        // Bersihkan dan format nama
-        recipient = decodeURIComponent(recipient.replace(/\+/g, ' ')).trim();
-        document.getElementById('recipientName').innerText = recipient;
-      }
-    });
-
-    // Fungsi cek password, menggunakan Vercel API
+  <script>
     async function checkPass() {
-      const input = document.getElementById("password").value.trim(); // Jangan di-toLowerCase() karena password Vercel bersifat case-sensitive
-      
-      // Mengunci tombol saat fetch
-      const button = document.querySelector('#overlay button');
-      button.disabled = true;
-      button.innerText = 'Mengecek...';
-      error.innerText = ''; // Hapus pesan error lama
+      const input = document.getElementById("password").value.trim();
+      const error = document.getElementById("error");
 
       try {
-        // Ganti dengan endpoint API Vercel Anda
-        const API_ENDPOINT = '/api/check-pass'; 
-        
-        // Melakukan fetch ke API Vercel
-        // Menggunakan mekanisme backoff dasar
-        const MAX_RETRIES = 3;
-        let attempt = 0;
-        let res;
+        const response = await fetch("/api/check-pass?pass=" + encodeURIComponent(input));
+        const data = await response.json();
 
-        while (attempt < MAX_RETRIES) {
-            try {
-                res = await fetch(`${API_ENDPOINT}?pass=${encodeURIComponent(input)}`);
-                if (res.ok) break;
-            } catch (e) {
-                // Biarkan mencoba lagi
-            }
-            attempt++;
-            if (attempt < MAX_RETRIES) await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 100));
-        }
-
-        if (!res || !res.ok) {
-            throw new Error(`Gagal terhubung ke server setelah ${MAX_RETRIES} kali coba.`);
-        }
-
-        const data = await res.json();
-        
         if (data.valid) {
-          // Sukses
-          overlay.classList.add("opacity-0");
-          
+          document.getElementById("overlay").classList.add("hidden");
           setTimeout(() => {
-            overlay.style.display = "none";
-            content.classList.add("visible");
-            body.classList.remove("no-scroll");
-            
-            // Panggil ScrollReveal setelah konten terlihat
-            applyScrollReveal();
-
-            // Panggil scrollToSection setelah konten terlihat
-            scrollToSection('cover');
-          }, 600); 
-          
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("content").style.display = "block";
+          }, 500);
         } else {
-          // Gagal
-          error.innerText = "Kode salah, coba lagi 🌿";
+          error.textContent = "Kode undangan salah, coba lagi.";
         }
-      } catch (e) {
-        console.error("Gagal terhubung ke API:", e);
-        error.innerText = "Gagal terhubung ke server. Pastikan API Vercel aktif.";
-      } finally {
-        // Aktifkan kembali tombol
-        button.disabled = false;
-        button.innerText = 'Buka Undangan';
+      } catch (err) {
+        console.error(err);
+        error.textContent = "Terjadi kesalahan koneksi.";
       }
     }
-    
-    // Pastikan navigasi berfungsi setelah dibuka, tambahkan id pada section dan link.
-    // Tambahkan event listener untuk smooth scrolling pada anchor links jika diperlukan
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            if (targetId) {
-                scrollToSection(targetId);
-            }
-        });
-    });
-
   </script>
 </body>
 </html>
-
